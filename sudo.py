@@ -33,7 +33,7 @@ class Sudo(dotbot.Plugin):
         elif isinstance(preserve_env, list) and all(
             isinstance(i, str) for i in preserve_env
         ):
-            proc_args += [f"--preserve-env='{','.join(preserve_env)}'"]
+            proc_args += [f"--preserve-env={','.join(preserve_env)}"]
 
         self._write_conf_file(sudo_conf, data)
 
