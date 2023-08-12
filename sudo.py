@@ -23,24 +23,21 @@ class Sudo(dotbot.Plugin):
         plugins = self._collect_plugins()
         sudo_conf = path.join(path.dirname(__file__), "sudo.conf.json")
 
+        proc_args = ["sudo"]
         preserve_env_vals = [
             item.pop("preserve-env") for item in data if "preserve-env" in item
         ]
         preserve_env = preserve_env_vals[0] if preserve_env_vals else None
         if isinstance(preserve_env, bool) and preserve_env:
-            env_args = "--preserve-env"
+            proc_args += ["--preserve-env"]
         elif isinstance(preserve_env, list) and all(
             isinstance(i, str) for i in preserve_env
         ):
-            env_args = f'--preserve-env="{",".join(preserve_env)}"'
-        else:
-            env_args = ""
+            proc_args += [f"--preserve-env='{','.join(preserve_env)}'"]
 
         self._write_conf_file(sudo_conf, data)
 
-        proc_args = [
-            "sudo",
-            env_args,
+        proc_args += [
             app,
             "--base-directory",
             base_directory,
