@@ -1,0 +1,61 @@
+[project]
+name = "dotbot-sudo"
+dynamic = ["version"]
+urls = { "Source" = "https://github.com/sijanc147/dotbot-sudo", "Bug Tracker" = "https://github.com/sijanc147/dotbot-sudo/issues" }
+description = "Plugin for Dotbot, that adds sudo directive, which allows you to run given direcives as root user."
+requires-python = ">=3.8"
+dependencies = [
+    "cython<3.0.0",
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = ["dotbot>=1.19.2", "debugpy>=1.6.7"]
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pylint."messages control"]
+disable = [
+  "raw-checker-failed",
+  "bad-inline-option",
+  "locally-disabled",
+  "file-ignored",
+  "suppressed-message",
+  "useless-suppression",
+  "deprecated-pragma",
+  "use-symbolic-message-instead",
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "missing-final-newline",
+  "invalid-name",
+  "line-too-long",
+  "unspecified-encoding",
+  "too-many-locals",
+  "too-many-branches",
+  "too-many-statements",
+]
+
+[tool.pdm.scripts]
+test.cmd = [
+  "python",
+  "-m",
+  "dotbot",
+  "--only",
+  "{args:sudofile}",
+  "-p",
+  "sudo.py",
+  "-c",
+  "example.conf.yml",
+]
